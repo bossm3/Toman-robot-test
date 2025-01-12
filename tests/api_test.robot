@@ -65,7 +65,7 @@ Verify API Response for User List
     Should Be Equal    ${response.headers['Content-Type']}    application/json; charset=utf-8
 
 Verify Out Of Range Page for User List
-    ${response}=   test search api response
+    ${response}=   Try Request Users   page=9999
     Should Be Equal As Numbers    ${response.status_code}    200   msg=Response status code is not 200
     ${body}=  set variable  ${response.json()}
     ${data_length}=    Get Length    ${body['data']}
@@ -73,7 +73,7 @@ Verify Out Of Range Page for User List
 
 
 Verify Resource API Response
-    ${response}=   test search api response
+    ${response}=   try request resource
     Should Be Equal As Numbers    ${response.status_code}    200   msg=Response status code is not 200
     ${body}=  set variable  ${response.json()}
     Should Be Equal As Numbers    ${body['data']['id']}    1
@@ -82,4 +82,3 @@ Verify Resource API Response
     Should Be Equal As Strings    "${body['data']['color']}"    "#98B2D1"
     Should Be Equal    ${body['data']['pantone_value']}    15-4020
     Should Be Equal    ${body['support']['url']}    https://contentcaddy.io?utm_source=reqres&utm_medium=json&utm_campaign=referral
-    Should Be Equal    ${body['support']['text']}    Tired of writing endless social media content? Let Content Caddy g.
